@@ -1,0 +1,6 @@
+metastore_db/
+target/
+derby.log
+.classpath
+.project
+.settings/

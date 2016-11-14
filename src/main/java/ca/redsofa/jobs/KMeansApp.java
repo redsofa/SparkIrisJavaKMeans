@@ -83,7 +83,7 @@ public class KMeansApp
 		//Now that we have figured out the number of clusters, let's run the algorithm against the entire dataset
 		model = KMeans.train(scaledData.rdd(), 3, numberOfIterations);
 		
-		System.out.println("Predicting a point [5.1,3.5,1.4,0.2] : ");
+		System.out.println("Predicting a point. Input Data :[4.9,3.5,1.4,0.2] : ");
 
 
 		Vector  points = Vectors.dense(4.9,3.5,1.4,0.2);
@@ -108,5 +108,11 @@ public class KMeansApp
 		for (Vector v : centers){
 			System.out.println("Center : " + v);			
 		}
+		//Save the model (for future use)
+		model.save(spark.sparkContext(),"MyModel");
+		//Load the saved model (as a test)
+		KMeansModel savedModel = KMeansModel.load(spark.sparkContext(), "MyModel");
+		//make a prediction with saved model
+		System.out.println("Saved Model Predicted Cluster : " + savedModel.predict(scaledPoints));
     }
 }
